@@ -37,26 +37,34 @@ agenticadmin/
 - Redis (for caching and queues)
 - LLM API access (OpenAI, Anthropic, or self-hosted)
 
+**Check your setup**: Run `.\scripts\check-requirements.ps1` (Windows) or `./scripts/check-requirements.sh` (Linux/macOS) to verify all required tools are installed.
+
 ### Installation
 
-```bash
-# Clone the repository
-git clone <repository-url>
-cd agenticadmin
+1. **Set up development environment**:
+   - See [SETUP.md](./SETUP.md) for detailed installation instructions
+   - Or use Docker Compose: `docker-compose up -d` (for PostgreSQL and Redis)
 
-# Install dependencies
-npm install  # or pip install -r requirements.txt
+2. **Install project dependencies**:
+   ```bash
+   npm install  # or pip install -r requirements.txt
+   ```
 
-# Set up environment variables
-cp .env.example .env
-# Edit .env with your configuration
+3. **Set up environment variables**:
+   ```bash
+   cp .env.example .env
+   # Edit .env with your configuration
+   ```
 
-# Run database migrations
-npm run migrate  # or python manage.py migrate
+4. **Run database migrations**:
+   ```bash
+   npm run migrate  # or python manage.py migrate
+   ```
 
-# Start the development server
-npm run dev  # or python manage.py runserver
-```
+5. **Start the development server**:
+   ```bash
+   npm run dev  # or python manage.py runserver
+   ```
 
 ## Architecture
 
@@ -90,10 +98,12 @@ AI: "💡 I noticed 23 students haven't logged in 30+ days.
 
 ## Documentation
 
+- [Setup Guide](./SETUP.md) - **Start here** - Development environment setup
+- [Requirements Status](./REQUIREMENTS_STATUS.md) - Current installation status
 - [Design Document](./DESIGN.md) - Complete design specification
-- [API Documentation](./docs/API.md) - API endpoints and schemas
 - [Agent Guide](./docs/AGENTS.md) - Agent development guide
-- [Deployment Guide](./docs/DEPLOYMENT.md) - Production deployment instructions
+- [API Documentation](./docs/API.md) - API endpoints and schemas (coming soon)
+- [Deployment Guide](./docs/DEPLOYMENT.md) - Production deployment instructions (coming soon)
 
 ## Development Status
 
