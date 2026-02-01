@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  STUDENT
+  INSTRUCTOR
+  ADMIN
+  SYSTEM_ADMIN
+  CONTENT_ADMIN
+  ANALYTICS_ADMIN
+  SUPPORT_ADMIN
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  role      Role     @default(STUDENT)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  enrollments Enrollment[]
+  courses     Course[]     @relation("InstructorCourses")
+}
+
+model Course {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  category    String?
+  startDate   DateTime?
+  endDate     DateTime?
+  isArchived  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  instructorId String?
+  instructor   User?    @relation("InstructorCourses", fields: [instructorId], references: [id])
+  
+  enrollments Enrollment[]
+  modules     Module[]
+}
+
+model Enrollment {
+  id        String   @id @default(uuid())
+  userId    String
+  courseId  String
+  createdAt DateTime @default(now())
+  
+  user   User   @relation(fields: [userId], references: [id])
+  course Course @relation(fields: [courseId], references: [id])
+
+  @@unique([userId, courseId])
+}
+
+model Module {
+  id       String    @id @default(uuid())
+  title    String
+  courseId String
+  course   Course    @relation(fields: [courseId], references: [id])
+  contents Content[]
+}
+
+model Content {
+  id       String @id @default(uuid())
+  title    String
+  type     String // VIDEO, TEXT, QUIZ, FILE
+  url      String?
+  moduleId String
+  module   Module @relation(fields: [moduleId], references: [id])
+}
